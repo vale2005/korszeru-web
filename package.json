@@ -1,0 +1,23 @@
+{
+  "name": "korszeru-web-audio-player",
+  "version": "1.0.0",
+  "description": "Assignment fo the mentioned subject at ELTE",
+  "main": "audio-player.js",
+  "scripts": {
+    "test": "mocha ./tests --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vale2005/korszeru-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vale2005/korszeru-web/issues"
+  },
+  "homepage": "https://github.com/vale2005/korszeru-web#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.1.0"
+  }
+}
