@@ -1,8 +1,8 @@
 {
-  "name": "korszeru-web-audio-player",
+  "name": "korszeru-web-best-songs-finder",
   "version": "1.0.0",
   "description": "Assignment fo the mentioned subject at ELTE",
-  "main": "audio-player.js",
+  "main": "best-songs-finder.js",
   "scripts": {
     "test": "mocha ./tests --recursive"
   },
