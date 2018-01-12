@@ -7,7 +7,7 @@ const { expect } = require("chai");
 
 describe("Zipf generator", function(){
     describe("calculate zipf frequencies", function(){
-        describe("given a list with two elemens", function(){
+        describe("given a list of two elemens", function(){
             it("returns their estimated frequencies according to the Zipf law", function(){
                 const frequencyList = [9,9];
                 const secondHarmonicNum =  MathUtils.calculateNthHarmonicNumber(2);
@@ -22,7 +22,7 @@ describe("Zipf generator", function(){
             });
         });
 
-        describe("given a list with three elemens", function(){
+        describe("given a list of three elemens", function(){
             it("returns their estimated frequencies according to the Zipf law", function(){
                 const frequencyList = [10,20,30];
                 const thirdHarmonicNum =  MathUtils.calculateNthHarmonicNumber(3);
@@ -41,7 +41,7 @@ describe("Zipf generator", function(){
     });
 
     describe("calculate quality indices", function(){
-        describe("given a list with two elemens", function(){
+        describe("given a list of two elemens", function(){
             it("returns their quality indices", function(){
                 const frequencyList = [9,9];
                 const gen = new ZipfGenerator(frequencyList);
@@ -56,8 +56,8 @@ describe("Zipf generator", function(){
         });
     });
 
-    describe("given a list with three elemens", function(){
-        it("returns their estimated frequencies according to the Zipf law", function(){
+    describe("given a list of three elemens", function(){
+        it("returns their quality indices", function(){
             const frequencyList = [30,20,10];
             const gen = new ZipfGenerator(frequencyList);
             const ZipfFrequencies = gen.calculateZipfFrequencies();

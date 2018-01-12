@@ -20,8 +20,8 @@ describe("Best songs finder", function() {
             expect(result[0]).to.eql("three");
             expect(result[1]).to.eql("two");
             expect(result[2]).to.eql("one")
-        })
-    })
+        });
+    });
 
     describe("order best songs", function(){
         it("returns the songnames ordered", function(){
@@ -37,8 +37,8 @@ describe("Best songs finder", function() {
             expect(result[0]).to.eql("two");
             expect(result[1]).to.eql("three");
             expect(result[2]).to.eql("one")
-        })
-    })
+        });
+    });
 
     describe("get the 2 best songs", function(){
         it("returns 2 best songs in order", function(){
@@ -54,6 +54,6 @@ describe("Best songs finder", function() {
             expect(result.length).to.eql(2);
             expect(result[0]).to.eql("three");
             expect(result[1]).to.eql("two");
-        })
-    })
-})
+        });
+    });
+});

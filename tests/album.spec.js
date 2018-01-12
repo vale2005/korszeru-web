@@ -9,6 +9,6 @@ describe("Album", function(){
             const album = new Album();
             album.addSong("one", 30);
             expect(album.songs.length).to.eql(1);
-        })
-    })
+        });
+    });
 });

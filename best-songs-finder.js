@@ -13,6 +13,7 @@ class BestSongsFinder{
         const songsWithQualityIndices = this._zipQualityIndicesWithSongs();
         const sorted = songsWithQualityIndices.sort((s1,s2) =>s2.qualityIndex - s1.qualityIndex);
         var sortedTitles = sorted.map(song => song.title);
+        
         if(this.count != undefined) return sortedTitles.slice(0, this.count);
         else return sortedTitles;
     }
