@@ -3,15 +3,18 @@
 const ZipfGenerator = require("./zipf-generator");
 
 class BestSongsFinder{
-    constructor(album){
+    constructor(album, count){
         this.album = album;
+        this.count = count;
         this._getQualityIndices();
     }
 
     getBestSongs(){
         const songsWithQualityIndices = this._zipQualityIndicesWithSongs();
         const sorted = songsWithQualityIndices.sort((s1,s2) =>s2.qualityIndex - s1.qualityIndex);
-        return sorted.map(song => song.title);
+        var sortedTitles = sorted.map(song => song.title);
+        if(this.count != undefined) return sortedTitles.slice(0, this.count);
+        else return sortedTitles;
     }
 
     _getQualityIndices(){
