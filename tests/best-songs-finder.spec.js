@@ -10,9 +10,9 @@ describe("Best songs finder", function() {
         it("it returns them in reverse order", function(){
             const album = new Album();
             
-            album.addSong(70, "one");
-            album.addSong(70, "two");
-            album.addSong(70, "three");
+            album.addSong("one", 70,);
+            album.addSong("two", 70);
+            album.addSong("three", 70);
     
             const finder = new BestSongsFinder(album);
             const result = finder.getBestSongs();
@@ -27,9 +27,9 @@ describe("Best songs finder", function() {
         it("it returns the songnames ordered", function(){
             const album = new Album();
             
-            album.addSong(30, "one");
-            album.addSong(20, "two");
-            album.addSong(10, "three");
+            album.addSong("one", 30);
+            album.addSong("two",20);
+            album.addSong("three", 10);
     
             const finder = new BestSongsFinder(album);
             const result = finder.getBestSongs();

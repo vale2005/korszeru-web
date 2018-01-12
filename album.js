@@ -5,8 +5,8 @@ class Album{
         this.songs = [];
     }
 
-    addSong(frequency, title){
-        const songToAdd = {frequency: frequency, title: title};
+    addSong(title, frequency){
+        const songToAdd = {title: title, frequency: frequency};
         this.songs.push(songToAdd);
     }
 }
