@@ -1,7 +1,5 @@
 "use strict"
 
-const BestSongsFinder = require("./best-songs-finder");
-
 class Store{
     constructor(){
         this._albums = [];
@@ -11,30 +9,39 @@ class Store{
         return this._albums;
     }
 
-    async create(album){
-        const toCreate = {...album, id: this._albums.length};
+    async create(songs){
+        const toCreate = {id: this._albums.length+1, songs: songs};
         this._albums.push(toCreate);
-        return toCreate;
+        return {id: toCreate.id};
     }
 
     async getById(id){
-        return this._albums.find(album => album.id == id);
+        const album = this._albums.find(album => album.id == id);
+        if(!album){
+            throw new StoreFindError("missing album")
+        }
+        return album.songs;
     }
 
     async deleteById(id){
-        this._albums = this._albums.filter(album => album.id != id)
+        const albumsWithoutDeleted = this._albums.filter(album => album.id != id);
+        if(albumsWithoutDeleted.length === this._albums.length){
+            throw new StoreFindError("missing album");
+        }
+        this._albums = albumsWithoutDeleted;
     }
 
     async deleteAll(){
         this._albums = [];
     }
-
-    async getBest(id, count){
-        const album = await this.getById(id);
-        const finder = new BestSongsFinder(album, count);
-
-        return finder.getBestSongs();
-    }
 }
 
-module.exports = {Store};
+class StoreValidationError extends Error {
+    
+}
+    
+class StoreFindError extends Error {
+
+}
+
+module.exports = {Store, StoreValidationError, StoreFindError};

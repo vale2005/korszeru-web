@@ -7,6 +7,33 @@ const { expect } = require('chai');
 
 describe("HTTP API", function(){
 
+    const emptyAlbum = [];
+    
+    const albumWithEqualFrequencies = [
+        { frequency: 30, title: "one" },
+        { frequency: 30, title: "two" },
+        { frequency: 30, title: "three" },
+        { frequency: 30, title: "four" }
+    ];
+
+    const realAlbum =  [
+        { frequency: 197812, title: "re_hash" },
+        { frequency: 78906, title: "5_4" },
+        { frequency: 189518, title: "tomorrow_comes_today" },
+        { frequency: 39453, title: "new_genious" },
+        { frequency: 210492, title: "clint_eastwood" },
+        { frequency: 26302, title: "man_research" },
+        { frequency: 22544, title: "punk" },
+        { frequency: 19727, title: "sound_check" },
+        { frequency: 17535, title: "double_bass" },
+        { frequency: 18782, title: "rock_the_house" },
+        { frequency: 198189, title: "19_2000" },
+        { frequency: 13151, title: "latin_simone" },
+        { frequency: 12139, title: "starshine" },
+        { frequency: 11272, title: "slow_country" },
+        { frequency: 10521, title: "m1_a1" }
+    ];
+    
     beforeEach(async function(){
         await request(api).delete("/albums");
     });
@@ -26,24 +53,17 @@ describe("HTTP API", function(){
 
     describe("POST", function(){
         it("creates a new album", async function(){
-            const album = new Album();
-            album.addSong("one", 700);
-            album.addSong("two", 700);
-            album.addSong("three", 700);
-            album.addSong("four", 700);
-            const response = await request(api).post("/albums").send(album);
+            const response = await request(api).post("/albums").send(realAlbum);
             expect(response.status).to.eql(201);
-            expect(response.body.songs[0].title).to.eql("one");
-            expect(response.body).to.include.key("id");
+            expect(response.body).to.eql({id: 1});
         });
     });
 
 
     describe("DELTE", function(){
         it("it deletes all albums", async function(){
-            const album = new Album();
-            const firstCreated = await request(api).post("/albums").send(album);
-            const secondCreated = await request(api).post("/albums").send(album);
+            const firstCreated = await request(api).post("/albums").send(emptyAlbum);
+            const secondCreated = await request(api).post("/albums").send(emptyAlbum);
             
             await request(api).delete("/albums");
 
@@ -54,47 +74,33 @@ describe("HTTP API", function(){
 
     describe("DELETE /:id", function(){
         it("deletes the album with the given id", async function(){
-            const album = new Album();
-            album.addSong("one", 700);
-            album.addSong("two", 700);
-            album.addSong("three", 700);
-            album.addSong("four", 700);
-            const firstAlbum = await request(api).post("/albums").send(album);
-            const secondAlbum = await request(api).post("/albums").send(album);
-            const response = await request(api).delete("/albums/0");
+            const firstId = await request(api).post("/albums").send(realAlbum);
+            const secondId = await request(api).post("/albums").send(emptyAlbum);
+            const response = await request(api).delete("/albums/2");
             expect(response.status).to.eql(204);
             
             const albums = await request(api).get('/albums');
-            expect(albums.body[0].id).to.eql(1);
+            for(let i=0; i<albums.length; ++i){
+                expect(albums[i].id).not.to.eql(2);
+            }
         });
     });
 
     describe("GET /:id", function(){
         it("returns the album with the given id", async function(){
-            const album = new Album();
-            album.addSong("one", 700);
-            album.addSong("two", 700);
-            album.addSong("three", 700);
-            album.addSong("four", 700);
-            const firstAlbum = await request(api).post("/albums").send(album);
-            const response = await request(api).get("/albums/0");
+            const firstId = await request(api).post("/albums").send(realAlbum);
+            const response = await request(api).get("/albums/1");
             expect(response.status).to.eql(200);
-            expect(response.body.songs[1].title).to.eql("two");
+
+            expect(response.body).to.eql(realAlbum);
         });
 
         describe("get n best by given id", function(){
             it("returns the best n song", async function(){
-                const album = new Album();
-                album.addSong("one", 700);
-                album.addSong("two", 700);
-                album.addSong("three", 700);
-                album.addSong("four", 700);
-                const firstAlbum = await request(api).post("/albums").send(album);
-                const response = await request(api).get("/albums/0/best/2");
+                const firstAlbum = await request(api).post("/albums").send(albumWithEqualFrequencies);
+                const response = await request(api).get("/albums/1/best?top=2");
                 expect(response.status).to.eql(200);
-                expect(response.body.bestSongs.length).to.eql(2);
-                expect(response.body.bestSongs[0]).to.eql("four");
-                expect(response.body.bestSongs[1]).to.eql("three");
+                expect(response.body).to.eql([{title: "four"}, {title: "three"}]);
             });
         });
     });

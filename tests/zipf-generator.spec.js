@@ -2,7 +2,6 @@
 
 var ZipfGenerator = require("../zipf-generator");
 var MathUtils = require("../math-utils")
-var { Album } = require("../best-songs-finder");
 const { expect } = require("chai");
 
 describe("Zipf generator", function(){
@@ -13,7 +12,7 @@ describe("Zipf generator", function(){
                 const secondHarmonicNum =  MathUtils.calculateNthHarmonicNumber(2);
                 const frequencyListSum =  MathUtils.calculateSum(frequencyList);
                 const gen = new ZipfGenerator(frequencyList)
-                const result = gen.calculateZipfFrequencies();
+                const result = gen._calculateZipfFrequencies();
                 expect(result.length).to.eql(2);
                 const firstZipfFreq = frequencyListSum*(1/(1*secondHarmonicNum));
                 const secondZipfFreq = frequencyListSum*(1/(2*secondHarmonicNum));
@@ -27,7 +26,7 @@ describe("Zipf generator", function(){
                 const thirdHarmonicNum =  MathUtils.calculateNthHarmonicNumber(3);
                 const frequencyListSum =  MathUtils.calculateSum(frequencyList);
                 const gen = new ZipfGenerator(frequencyList)
-                const result = gen.calculateZipfFrequencies();
+                const result = gen._calculateZipfFrequencies();
                 expect(result.length).to.eql(3);
                 const firstZipfFreq = frequencyListSum*(1/(1*thirdHarmonicNum));
                 const secondZipfFreq = frequencyListSum*(1/(2*thirdHarmonicNum));
@@ -42,7 +41,7 @@ describe("Zipf generator", function(){
             it("returns their quality indices", function(){
                 const frequencyList = [9,9];
                 const gen = new ZipfGenerator(frequencyList);
-                const ZipfFrequencies = gen.calculateZipfFrequencies();
+                const ZipfFrequencies = gen._calculateZipfFrequencies();
                 const result = gen.calculateQualityIndices();
                 expect(result.length).to.eql(2);
                 const firstQualityIndex = frequencyList[0]/ZipfFrequencies[0];
@@ -56,7 +55,7 @@ describe("Zipf generator", function(){
         it("returns their quality indices", function(){
             const frequencyList = [30,20,10];
             const gen = new ZipfGenerator(frequencyList);
-            const ZipfFrequencies = gen.calculateZipfFrequencies();
+            const ZipfFrequencies = gen._calculateZipfFrequencies();
             const result = gen.calculateQualityIndices();
             expect(result.length).to.eql(3);
             const firstQualityIndex = frequencyList[0]/ZipfFrequencies[0];

@@ -10,20 +10,20 @@ class ZipfGenerator{
     }
 
     calculateQualityIndices(){
-        const zipfFrequencies = this.calculateZipfFrequencies();
-        return zipfFrequencies.map((zFreq, ind) => this.getNthQualityIndex(zFreq, ind));
+        const zipfFrequencies = this._calculateZipfFrequencies();
+        return zipfFrequencies.map((zFreq, ind) => this._getNthQualityIndex(zFreq, ind));
     }
 
-    getNthQualityIndex(zipfFreq, index){
+    _getNthQualityIndex(zipfFreq, index){
         return this.frequencyList[index]/zipfFreq;
     }
 
-    calculateZipfFrequencies(){
-        const freqencyIndices = mathUtils.generateFirstNNumber(this.frequencyList.length);
-        return freqencyIndices.map(pos => this.calculateNthZipfFreqency(pos));
+    _calculateZipfFrequencies(){
+        const freqencyIndices = mathUtils.generateRangeFrom1ToN(this.frequencyList.length);
+        return freqencyIndices.map(pos => this._calculateNthZipfFreqency(pos));
     }
 
-    calculateNthZipfFreqency(position){
+    _calculateNthZipfFreqency(position){
         const zipfProduct = 1/(this.harmonicNum*(position));
         return zipfProduct*this.frequencyListSum;
     }

@@ -1,5 +1,7 @@
 "use strict"
 
+const BestSongsFinder = require("./best-songs-finder");
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -32,11 +34,12 @@ app.delete('/albums/:id', async function(req, res) {
     res.status(204).end();
 });
 
-app.get("/albums/:id/best/:top", async function(req, res){
-    const albumId = req.params.id;
-    const songCount = req.params.top
-    const bestSongs = await store.getBest(albumId, songCount)
-    res.status(200).send({'bestSongs': bestSongs}).end();
+app.get("/albums/:id/best", async function(req, res){
+    const album = await store.getById(req.params.id);
+    const finder = new BestSongsFinder(album, req.query.top);
+    const bestSongs = finder.getBestSongs();
+    
+    res.status(200).send(bestSongs).end();
 });
 
 module.exports = app;

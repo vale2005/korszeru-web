@@ -7,12 +7,12 @@ class MathUtils{
     }
 
     static calculateNthHarmonicNumber(n){
-        const firstNNumber = this.generateFirstNNumber(n);
+        const firstNNumber = this.generateRangeFrom1ToN(n);
         const addInverse = (accumulator, curr) => accumulator + 1/curr;
         return firstNNumber.reduce(addInverse, 0);
     }
 
-    static generateFirstNNumber(n){
+    static generateRangeFrom1ToN(n){
         const arr = [];
         for(let i=0; i<n; ++i){
             arr.push(i+1);

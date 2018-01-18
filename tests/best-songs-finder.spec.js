@@ -6,49 +6,50 @@ const { expect } = require('chai');
 
 
 describe("Best songs finder", function() {
+    const emptyAlbum = [];
+    
+        const albumWithEqualFrequencies = [
+            { frequency: 30, title: "one" },
+            { frequency: 30, title: "two" },
+            { frequency: 30, title: "three" }, 
+            { frequency: 30, title: "four" },
+        ];
+    
+        const realAlbum =  [
+            { frequency: 30, title: "re_hash" },
+            { frequency: 20, title: "5_4" },
+            { frequency: 9, title: "tomorrow_comes_today" }
+        ];
+
     describe("given songs with the same frequencies", function(){
         it("returns them in reverse order", function(){
-            const album = new Album();
-            
-            album.addSong("one", 70,);
-            album.addSong("two", 70);
-            album.addSong("three", 70);
     
-            const finder = new BestSongsFinder(album);
+            const finder = new BestSongsFinder(albumWithEqualFrequencies);
             const result = finder.getBestSongs();
             
-            expect(result).to.eql(["three", "two", "one"]);
+            expect(result).to.eql([{title:"four"}, {title:"three"}, {title: "two"},{title: "one"}]);
         });
     });
 
     describe("order best songs", function(){
         it("returns the songnames ordered", function(){
-            const album = new Album();
-            
-            album.addSong("one", 30);
-            album.addSong("two",20);
-            album.addSong("three", 10);
     
-            const finder = new BestSongsFinder(album);
+            const finder = new BestSongsFinder(realAlbum);
             const result = finder.getBestSongs();
             
-            expect(result).to.eql(["two", "three", "one"]);
+            expect(result).to.eql([{title: "5_4"}, {title: "re_hash"}, {title: "tomorrow_comes_today"}]);
         });
     });
 
     describe("get the 2 best songs", function(){
         it("returns 2 best songs in order", function(){
             const album = new Album();
-            
-            album.addSong("one", 70);
-            album.addSong("two",70);
-            album.addSong("three", 70);
     
-            const finder = new BestSongsFinder(album, 2);
+            const finder = new BestSongsFinder(albumWithEqualFrequencies, 2);
             const result = finder.getBestSongs();
             
             expect(result.length).to.eql(2);
-            expect(result).to.eql(["three", "two"]);
+            expect(result).to.eql([{title:"four"},{title: "three"}]);
         });
     });
 });
