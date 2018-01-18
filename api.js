@@ -21,6 +21,17 @@ app.get("/albums/:id", async function(req, res){
     res.status(200).send(await store.getById(albumId)).end();
 });
 
+app.delete('/albums', async function(req, res) {
+    await store.deleteAll();
+    res.end();
+});
+
+app.delete('/albums/:id', async function(req, res) {
+    const albumId = req.params.id;
+    await store.deleteById(albumId);
+    res.status(204).end();
+});
+
 app.get("/albums/:id/best/:top", async function(req, res){
     const albumId = req.params.id;
     const songCount = req.params.top

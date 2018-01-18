@@ -21,6 +21,14 @@ class Store{
         return this._albums.find(album => album.id == id);
     }
 
+    async deleteById(id){
+        this._albums = this._albums.filter(album => album.id != id)
+    }
+
+    async deleteAll(){
+        this._albums = [];
+    }
+
     async getBest(id, count){
         const album = await this.getById(id);
         const finder = new BestSongsFinder(album, count);

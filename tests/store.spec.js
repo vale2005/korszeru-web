@@ -18,8 +18,7 @@ describe("Albums store", function(){
             album.addSong("one", 2000);
             album.addSong("two", 4000);
             const result = await store.create(album);
-            expect(result.songs.length).to.eql(2);
-            expect(result.songs[1].title).to.eql("two");
+            expect(result.songs).to.eql([{title: "one", frequency: 2000}, {title: "two", frequency: 4000}]);
             expect(result).to.include.keys("id"); 
 
         });
@@ -34,8 +33,7 @@ describe("Albums store", function(){
             album.addSong("one", 2000);
             await store.create(album);
             const result = await store.getById(2);
-            expect(result.songs.length).to.eql(1);
-            expect(result.songs[0].title).to.eql("one");
+            expect(result.songs).to.eql([{title: "one", frequency: 2000}]);
         });
     });
 
@@ -50,10 +48,37 @@ describe("Albums store", function(){
                 album.addSong("four", 2000);
                 await store.create(album);
                 const result = await store.getBest(0, 2);
-                expect(result.length).to.eql(2);
-                expect(result[0]).to.eql("four");
-                expect(result[1]).to.eql("three");
+                expect(result).to.eql(["four", "three"]);
             });
+        });
+    });
+
+    describe("deleting an album by id", function(){
+        it("is not on in the albums", async function(){
+            const store = new Store();
+            const album = new Album();
+            const firstCreated = await store.create(album);
+            album.addSong("one", 2000);
+            const secondCreated = await store.create(album);
+            await store.deleteById(firstCreated.id);
+
+            const remaining = await store.getAll();
+            expect(remaining).to.eql([secondCreated]);
+
+        });
+    });
+
+    describe("delete all", function(){
+        it("is empty", async function(){
+            const store = new Store();
+            const album = new Album();
+            const firstCreated = await store.create(album);
+            const secondCreated = await store.create(album);
+            await store.deleteAll();
+
+            const remaining = await store.getAll();
+            expect(remaining).to.eql([]);
+
         });
     });
 });

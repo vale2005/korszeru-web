@@ -17,9 +17,7 @@ describe("Best songs finder", function() {
             const finder = new BestSongsFinder(album);
             const result = finder.getBestSongs();
             
-            expect(result[0]).to.eql("three");
-            expect(result[1]).to.eql("two");
-            expect(result[2]).to.eql("one")
+            expect(result).to.eql(["three", "two", "one"]);
         });
     });
 
@@ -34,9 +32,7 @@ describe("Best songs finder", function() {
             const finder = new BestSongsFinder(album);
             const result = finder.getBestSongs();
             
-            expect(result[0]).to.eql("two");
-            expect(result[1]).to.eql("three");
-            expect(result[2]).to.eql("one")
+            expect(result).to.eql(["two", "three", "one"]);
         });
     });
 
@@ -52,8 +48,7 @@ describe("Best songs finder", function() {
             const result = finder.getBestSongs();
             
             expect(result.length).to.eql(2);
-            expect(result[0]).to.eql("three");
-            expect(result[1]).to.eql("two");
+            expect(result).to.eql(["three", "two"]);
         });
     });
 });

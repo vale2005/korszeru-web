@@ -17,8 +17,7 @@ describe("Zipf generator", function(){
                 expect(result.length).to.eql(2);
                 const firstZipfFreq = frequencyListSum*(1/(1*secondHarmonicNum));
                 const secondZipfFreq = frequencyListSum*(1/(2*secondHarmonicNum));
-                expect(result[0]).to.eql(firstZipfFreq);
-                expect(result[1]).to.eql(secondZipfFreq);
+                expect(result).to.eql([firstZipfFreq, secondZipfFreq]);
             });
         });
 
@@ -33,9 +32,7 @@ describe("Zipf generator", function(){
                 const firstZipfFreq = frequencyListSum*(1/(1*thirdHarmonicNum));
                 const secondZipfFreq = frequencyListSum*(1/(2*thirdHarmonicNum));
                 const thirdZipfFreq = frequencyListSum*(1/(3*thirdHarmonicNum));
-                expect(result[0]).to.eql(firstZipfFreq);
-                expect(result[1]).to.eql(secondZipfFreq);
-                expect(result[2]).to.eql(thirdZipfFreq);
+                expect(result).to.eql([firstZipfFreq, secondZipfFreq, thirdZipfFreq]);
             });
         });
     });
@@ -50,8 +47,7 @@ describe("Zipf generator", function(){
                 expect(result.length).to.eql(2);
                 const firstQualityIndex = frequencyList[0]/ZipfFrequencies[0];
                 const secondQualityIndex = frequencyList[1]/ZipfFrequencies[1];
-                expect(result[0]).to.eql(firstQualityIndex);
-                expect(result[1]).to.eql(secondQualityIndex);
+                expect(result).to.eql([firstQualityIndex, secondQualityIndex]);
             });
         });
     });
@@ -66,13 +62,7 @@ describe("Zipf generator", function(){
             const firstQualityIndex = frequencyList[0]/ZipfFrequencies[0];
             const secondQualityIndex = frequencyList[1]/ZipfFrequencies[1];
             const thirdQualityIndex = frequencyList[2]/ZipfFrequencies[2];
-            expect(result[0]).to.eql(firstQualityIndex);
-            expect(result[1]).to.eql(secondQualityIndex);
-            expect(result[2]).to.eql(thirdQualityIndex);
-            expect(result[0]).to.below(1);
-            expect(result[1]).to.above(1);
-            expect(result[2]).to.below(1);
-            expect(result[2]).to.above(result[0]);
+            expect(result).to.eql([firstQualityIndex, secondQualityIndex, thirdQualityIndex]);
         });
     });
 });
