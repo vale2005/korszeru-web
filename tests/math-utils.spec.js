@@ -1,4 +1,4 @@
-var MathUtils = require('../math-utils');
+const MathUtils = require('../math-utils');
 const { expect } = require('chai');
 
 describe("Math utils", function(){

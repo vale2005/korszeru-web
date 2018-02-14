@@ -1,7 +1,7 @@
 "use strict";
 
-var ZipfGenerator = require("../zipf-generator");
-var MathUtils = require("../math-utils")
+const ZipfGenerator = require("../zipf-generator");
+const MathUtils = require("../math-utils")
 const { expect } = require("chai");
 
 describe("Zipf generator", function(){

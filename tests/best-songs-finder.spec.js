@@ -1,7 +1,7 @@
 'use strict';
 
-var BestSongsFinder= require('../best-songs-finder');
-var Album = require('../album');
+const BestSongsFinder= require('../best-songs-finder');
+const Album = require('../album');
 const { expect } = require('chai');
 
 

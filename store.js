@@ -10,6 +10,8 @@ class Store{
     }
 
     async create(songs){
+        songs.map(song => this._songHasAllProperties(song));
+
         const toCreate = {id: this._albums.length+1, songs: songs};
         this._albums.push(toCreate);
         return {id: toCreate.id};
@@ -33,6 +35,13 @@ class Store{
 
     async deleteAll(){
         this._albums = [];
+    }
+
+    _songHasAllProperties(song){
+        if(!song.title)
+            throw new StoreValidationError("missing title");
+        if(!song.frequency)
+            throw new StoreValidationError("missing frequency");
     }
 }
 

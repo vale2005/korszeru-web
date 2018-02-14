@@ -33,6 +33,11 @@ describe("HTTP API", function(){
         { frequency: 11272, title: "slow_country" },
         { frequency: 10521, title: "m1_a1" }
     ];
+
+    const albumWitTitleMissing = [
+        { frequency: 30, title: "one" },
+        { frequency: 30}
+    ];
     
     beforeEach(async function(){
         await request(api).delete("/albums");
@@ -56,6 +61,11 @@ describe("HTTP API", function(){
             const response = await request(api).post("/albums").send(realAlbum);
             expect(response.status).to.eql(201);
             expect(response.body).to.eql({id: 1});
+        });
+
+        it("responds 400 if a song has no title", async function(){
+            const response = await request(api).post("/albums").send(albumWitTitleMissing);
+            expect(response.status).to.eql(400);
         });
     });
 
@@ -84,6 +94,11 @@ describe("HTTP API", function(){
                 expect(albums[i].id).not.to.eql(2);
             }
         });
+
+        it("responds 400 if there is no song with the given id", async function(){
+            const response = await request(api).delete("/albums/99");
+            expect(response.status).to.eql(400);
+        })
     });
 
     describe("GET /:id", function(){
@@ -94,6 +109,11 @@ describe("HTTP API", function(){
 
             expect(response.body).to.eql(realAlbum);
         });
+
+        it("responds 400 if there is no song with the given id", async function(){
+            const response = await request(api).get("/albums/99");
+            expect(response.status).to.eql(400);
+        })
 
         describe("get n best by given id", function(){
             it("returns the best n song", async function(){

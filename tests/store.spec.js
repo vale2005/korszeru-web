@@ -31,6 +31,16 @@ describe("Albums store", function(){
         { frequency: 10521, title: "m1_a1" }
     ];
 
+    const albumWitTitleMissing = [
+        { frequency: 30, title: "one" },
+        { frequency: 30}
+    ];
+
+    const albumWithFrequencyMissing = [
+        { frequency: 30, title: "one" },
+        { title: "two"}
+    ];
+
     it("is empty when created", async function(){
         const store = new Store();
         const albums = await store.getAll();
@@ -42,7 +52,36 @@ describe("Albums store", function(){
             const store = new Store();
             const result = await store.create(realAlbum);
             expect(result).to.eql({id: 1});
+        });
 
+        describe("a song has no title", function(){
+            it("throws an exception", async function(){
+                const store = new Store();
+                try {
+                    await store.create(albumWitTitleMissing);
+                }catch(error){
+                    expect(error).to.be.instanceof(StoreValidationError);
+                    expect(error.message).to.include("missing");
+                    expect(error.message).to.include("title");
+                    return;
+                }
+                throw new Error("should have thrown missing title exception");
+            });
+        });
+
+        describe("a song has no frequency", function(){
+            it("throws an exception", async function(){
+                const store = new Store();
+                try {
+                    await store.create(albumWithFrequencyMissing);
+                }catch(error){
+                    expect(error).to.be.instanceof(StoreValidationError);
+                    expect(error.message).to.include("missing");
+                    expect(error.message).to.include("frequency");
+                    return;
+                }
+                throw new Error("should have thrown missing frequency exception");
+            });
         });
     });
 
@@ -52,20 +91,18 @@ describe("Albums store", function(){
             await store.create(realAlbum);
             const result = await store.getById(1);
 
-            
             expect(result).to.eql(realAlbum);
         });
 
         it('throws error if album is not found', async function() {
             const store = new Store();
-            
             try {
               await store.getById(56);
-            } catch (error) {
-              expect(error).to.be.instanceof(StoreFindError);
-              expect(error.message).to.include('missing');
-              expect(error.message).to.include('album');
-              return;
+            }catch(error){
+                expect(error).to.be.instanceof(StoreFindError);
+                expect(error.message).to.include('missing');
+                expect(error.message).to.include('album');
+                return;
             }
       
             throw new Error('should have thrown error about missing album');
