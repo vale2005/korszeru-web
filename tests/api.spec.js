@@ -97,6 +97,12 @@ describe("HTTP API", function(){
                 expect(response.status).to.eql(200);
                 expect(response.body).to.eql([{title: "four"}, {title: "three"}]);
             });
+
+            it("returns 400 if the top parameter is missing", async function(){
+                const firstAlbum = await request(api).post("/albums").send(albumWithEqualFrequencies);
+                const response = await request(api).get("/albums/1/best");
+                expect(response.status).to.eql(400);
+            });
         });
     });
 });
