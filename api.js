@@ -55,11 +55,22 @@ app.delete('/albums/:id', async function(req, res) {
 });
 
 app.get("/albums/:id/best", async function(req, res){
-    const album = await store.getById(req.params.id);
-    const finder = new BestSongsFinder(album, req.query.top);
-    const bestSongs = finder.getBestSongs();
+    try{
+        const album = await store.getById(req.params.id);
+        if(typeof req.query.top != 'undefined'){
+            const finder = new BestSongsFinder(album, req.query.top);
+            const bestSongs = finder.getBestSongs();
+            res.status(200).send(bestSongs).end();
+        }
+        else{
+            res.status(400).end();
+        }
+    }
+    catch(error){
+        const errorStatus = returnStatusCodeForError(error);
+        res.status(errorStatus).end();
+    }
     
-    res.status(200).send(bestSongs).end();
 });
 
 function returnStatusCodeForError(error){
